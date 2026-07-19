@@ -18,3 +18,16 @@ dist/
 
 # Governança local
 .arsenal/hardware_profile.yaml
+
+# Ambiente virtual
+.venv/
+
+# Python build/test
+.pytest_cache/
+*.egg-info/
+
+# GitHub
+.github/
+
+# Windows
+desktop.ini
