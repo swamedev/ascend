@@ -195,3 +195,12 @@ class TestCLI:
         )
         assert result.returncode == 0
         assert (tmp_path / "test-pkg" / "package.yaml").exists()
+
+    def test_cli_progress_no_db(self, tmp_path):
+        import subprocess, sys
+        result = subprocess.run(
+            [sys.executable, "-m", "ascend.cli.main", "progress", "--builder", "ghost"],
+            capture_output=True, text=True, cwd=str(tmp_path)
+        )
+        assert result.returncode == 1
+        assert "No local database found" in result.stdout

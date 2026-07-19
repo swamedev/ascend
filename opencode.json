@@ -1,0 +1,5 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "shell": "C:\\Windows\\System32\\cmd.exe",
+  "instructions": ["CONTEXT.md"]
+}

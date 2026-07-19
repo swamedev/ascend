@@ -27,7 +27,9 @@ def main() -> None:
     init_parser.add_argument("name", nargs="?", default="my-package", help="Package name")
 
     sub.add_parser("doctor", help="Check system health")
-    sub.add_parser("progress", help="Show builder progress")
+
+    prog_parser = sub.add_parser("progress", help="Show builder progress")
+    prog_parser.add_argument("--builder", default="default", help="Builder username")
 
     args = parser.parse_args()
 
@@ -42,7 +44,7 @@ def main() -> None:
     elif args.command == "doctor":
         _cmd_doctor()
     elif args.command == "progress":
-        _cmd_progress()
+        _cmd_progress(args)
     else:
         parser.print_help()
 
@@ -114,14 +116,50 @@ def _cmd_init(args: argparse.Namespace) -> None:
 
 
 def _cmd_doctor() -> None:
-    import sys as _sys
-    print(f"[OK] Python: {_sys.version}")
-    print("[OK] ASCEND Runtime: v0.1.0")
-    print("[OK] System: OK")
+    from ascend.cli.doctor import run as doctor_run
+    doctor_run()
 
 
-def _cmd_progress() -> None:
-    print("Progress tracking coming soon.")
+def _cmd_progress(args: argparse.Namespace) -> None:
+    from ascend.infrastructure.persistence.sqlite.connection import ConnectionManager
+    from ascend.infrastructure.persistence.sqlite.builder_repository import SQLiteBuilderRepository
+
+    db_path = Path(".ascend.db")
+    if not db_path.exists():
+        print(f"[!] No local database found at {db_path.absolute()}")
+        print("[!] Run a mission first to initialize your local ledger.")
+        sys.exit(1)
+
+    conn_manager = ConnectionManager(str(db_path))
+    repo = SQLiteBuilderRepository(conn_manager)
+
+    try:
+        builder = repo.get_by_username(args.builder)
+        if not builder:
+            print(f"[!] Builder '{args.builder}' not found in the local ledger.")
+            sys.exit(1)
+
+        print(f"\n⚜️  ASCEND DOSSIER: {builder.username.upper()} ⚜️")
+        print("=" * 40)
+        print(f"NÍVEL: {builder.level}  |  XP TOTAL: {builder.xp}")
+        print("-" * 40)
+
+        print(f"COMPETÊNCIAS COMPROVADAS ({len(builder.competencies)}):")
+        if not builder.competencies:
+            print("  (Nenhuma competência desbloqueada ainda)")
+        for c in builder.competencies:
+            print(f"  ✓ {c.name} (Nível {c.level})")
+
+        print("-" * 40)
+        print(f"CONQUISTAS ({len(builder.achievements)}):")
+        if not builder.achievements:
+            print("  (Nenhuma conquista obtida)")
+        for a in builder.achievements:
+            print(f"  ★ {a.name}")
+        print("=" * 40 + "\n")
+
+    finally:
+        conn_manager.close()
 
 
 if __name__ == "__main__":

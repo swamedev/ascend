@@ -11,15 +11,16 @@ from ascend.application.commands import (
     UnlockCompetency,
 )
 from ascend.application.dto import BuilderDTO, MissionDTO, EvidenceDTO
-from ascend.application.exceptions import BuilderNotFound, MissionNotFound
+from ascend.application.exceptions import BuilderNotFound, EvidenceRequired, MissionNotFound
 from ascend.application.services import (
+    AssessmentService,
     BuilderService,
     MissionService,
     CompetencyService,
 )
 from ascend.domain.builder import Builder
 from ascend.domain.mission import Mission
-from ascend.domain.evidence import Evidence, EvidenceType
+from ascend.domain.evidence import Evidence, EvidenceStatus, EvidenceType
 from ascend.domain.competency import Competency
 from ascend.domain.events import DomainEvent
 
@@ -411,3 +412,84 @@ class TestServiceIntegration:
         final = builder_svc.get_builder(builder.id)
         assert final.competency_count == 1
         assert len(bus.published) >= 4
+
+
+class TestAssessmentService:
+    def test_success_approval_transitions_to_accepted(self):
+        evidence_repo = InMemoryEvidenceRepo()
+        bus = FakeEventBus()
+        service = AssessmentService(evidence_repo, bus)
+
+        evidence = Evidence(artifact="my code", type=EvidenceType.CODE)
+        evidence.submit("builder-1")
+        evidence_repo.save(evidence)
+
+        assessment = service.complete_assessment(
+            CompleteAssessment(
+                evidence_id=evidence.id,
+                score=0.8,
+                feedback="Excellent work",
+                reviewer="Reviewer Agent",
+            )
+        )
+
+        assert assessment.is_approved is True
+        updated_evidence = evidence_repo.get(evidence.id)
+        assert updated_evidence.status == EvidenceStatus.ACCEPTED
+
+    def test_success_rejection_transitions_to_rejected(self):
+        evidence_repo = InMemoryEvidenceRepo()
+        bus = FakeEventBus()
+        service = AssessmentService(evidence_repo, bus)
+
+        evidence = Evidence(artifact="bad code", type=EvidenceType.CODE)
+        evidence.submit("builder-1")
+        evidence_repo.save(evidence)
+
+        assessment = service.complete_assessment(
+            CompleteAssessment(
+                evidence_id=evidence.id,
+                score=0.5,
+                feedback="Needs improvement",
+                reviewer="Reviewer Agent",
+            )
+        )
+
+        assert assessment.is_approved is False
+        updated_evidence = evidence_repo.get(evidence.id)
+        assert updated_evidence.status == EvidenceStatus.REJECTED
+
+    def test_policy_denies_already_accepted_evidence(self):
+        evidence_repo = InMemoryEvidenceRepo()
+        bus = FakeEventBus()
+        service = AssessmentService(evidence_repo, bus)
+
+        evidence = Evidence(artifact="my code", type=EvidenceType.CODE)
+        evidence.submit("builder-1")
+        evidence.accept()
+        evidence_repo.save(evidence)
+
+        with pytest.raises(EvidenceRequired) as exc:
+            service.complete_assessment(
+                CompleteAssessment(
+                    evidence_id=evidence.id,
+                    score=0.9,
+                )
+            )
+
+        assert "Policy Violation [StateProtocol]" in str(exc.value)
+
+    def test_policy_denies_missing_evidence(self):
+        evidence_repo = InMemoryEvidenceRepo()
+        bus = FakeEventBus()
+        service = AssessmentService(evidence_repo, bus)
+
+        with pytest.raises(EvidenceRequired) as exc:
+            service.complete_assessment(
+                CompleteAssessment(
+                    evidence_id="invalid-id",
+                    score=0.9,
+                )
+            )
+
+        assert "Policy Violation [I2]" in str(exc.value)
