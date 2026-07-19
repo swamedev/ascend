@@ -1,0 +1,40 @@
+name: ASCEND Governance Triage
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  enforce-constitution:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Issue Compliance
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueBody = context.payload.issue.body || "";
+            const isRFC = issueBody.includes("Alinhamento com First Principles");
+            const isPackage = issueBody.includes("Tipo de Evidência Exigida");
+            
+            if (!isRFC && !isPackage) {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: "⚜️ **ASCEND GOVERNANCE BOT** ⚜️\n\nSaudações, Builder. Detectamos que esta Issue não seguiu os templates formais do ecossistema (RFC ou Package Submission).\n\nO ASCEND opera sob uma [Constituição Estrita](https://github.com/swamedev/ascend/blob/main/foundation/DOC-0003_First_Principles.md). Para que sua solicitação seja processada pelo *Technical Steering Committee*, feche esta Issue e abra uma nova utilizando os formulários oficiais disponíveis na aba 'New Issue'.\n\n*A disciplina precede a maestria.*"
+              });
+              
+              await github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['invalid-format', 'needs-compliance']
+              });
+            } else {
+              await github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['triage-pending']
+              });
+            }

@@ -1,0 +1,23 @@
+name: ASCEND Package Submission
+description: Submeta um novo pacote de conhecimento (APS) para o Registry oficial.
+title: "PKG: <Nome do Pacote>"
+labels: ["package", "pending-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ⚜️ **ATENÇÃO:** O pacote deve passar em `ascend package validate` antes de ser submetido.
+  - type: input
+    id: package_id
+    attributes:
+      label: Package ID
+      description: O ID único do pacote (ex: cloud-foundations)
+    validations:
+      required: true
+  - type: input
+    id: evidence_type
+    attributes:
+      label: Tipo de Evidência Exigida
+      description: O que o Builder precisará produzir para provar esta competência?
+    validations:
+      required: true

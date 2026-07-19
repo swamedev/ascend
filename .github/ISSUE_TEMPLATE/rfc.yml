@@ -1,0 +1,30 @@
+name: ASCEND RFC (Request for Comments)
+description: Proponha uma mudança nos Protocolos, Especificações ou Arquitetura.
+title: "RFC: <Título Curto>"
+labels: ["rfc", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ⚜️ **ATENÇÃO:** Toda proposta deve estar estritamente alinhada com a Constituição do ASCEND (DOC-0000 a DOC-0009). Propostas que violem os Invariantes Arquiteturais serão rejeitadas pelo Chief Architect.
+  - type: textarea
+    id: context
+    attributes:
+      label: 1. Contexto e Problema
+      description: Qual problema sistêmico esta RFC resolve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 2. Proposta Arquitetural
+      description: Descreva a solução técnica ou conceitual (não cole código solto, defina o contrato).
+    validations:
+      required: true
+  - type: input
+    id: principles
+    attributes:
+      label: 3. Alinhamento com First Principles
+      description: Qual(is) princípio(s) do DOC-0003 esta RFC fortalece? (Ex: Princípio 1 - Competência exige evidência)
+    validations:
+      required: true
