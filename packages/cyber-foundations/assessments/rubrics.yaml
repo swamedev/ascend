@@ -1,0 +1,33 @@
+spec:
+  rubrics:
+    - id: html-quality
+      title: Qualidade HTML
+      criteria:
+        estrutura:
+          weight: 30
+          description: Uso correto de tags semânticas e estrutura HTML5
+        acessibilidade:
+          weight: 20
+          description: Aplicação de boas práticas de acessibilidade
+        validade:
+          weight: 25
+          description: Código válido sem erros de sintaxe
+        organizacao:
+          weight: 25
+          description: Organização e legibilidade do código
+
+    - id: css-quality
+      title: Qualidade CSS
+      criteria:
+        layout:
+          weight: 35
+          description: Implementação correta do layout responsivo
+        estilizacao:
+          weight: 25
+          description: Aplicação consistente de estilos e cores
+        eficiencia:
+          weight: 20
+          description: Código CSS eficiente sem redundâncias
+        organizacao:
+          weight: 20
+          description: Organização e manutenibilidade do CSS

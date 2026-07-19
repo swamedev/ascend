@@ -1,0 +1,16 @@
+metadata:
+  id: linux-foundations
+  version: 1.0.0
+  title: Linux Foundations
+  description: Competências fundamentais para navegação e administração do terminal Linux
+  author: ASCEND Institute
+  license: MIT
+
+spec:
+  runtime: ">=1.0"
+  language: pt-BR
+  estimated_hours: 20
+  dependencies: []
+
+capabilities:
+  - evidence

@@ -1,0 +1,17 @@
+spec:
+  rubrics:
+    - id: python-quality
+      title: Qualidade Python
+      criteria:
+        sintaxe:
+          weight: 30
+          description: Código Python válido sem erros de sintaxe
+        eficiencia:
+          weight: 25
+          description: Uso eficiente de estruturas de dados e algoritmos
+        legibilidade:
+          weight: 25
+          description: Código legível com nomes descritivos e comentários
+        boas-praticas:
+          weight: 20
+          description: Segue PEP 8 e boas práticas da linguagem

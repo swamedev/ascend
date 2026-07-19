@@ -1,0 +1,16 @@
+metadata:
+  id: cyber-foundations
+  version: 1.0.0
+  title: Cyber Foundations
+  description: Competências fundamentais para desenvolvimento web e lógica de programação
+  author: ASCEND Project
+  license: MIT
+
+spec:
+  runtime: ">=1.0"
+  language: pt-BR
+  estimated_hours: 30
+  dependencies: []
+
+capabilities:
+  - evidence

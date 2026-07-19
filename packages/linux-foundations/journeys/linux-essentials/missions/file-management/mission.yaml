@@ -1,0 +1,30 @@
+metadata:
+  id: file-management
+  title: File Management
+  description: Crie, copie, mova e remova arquivos e diretórios
+
+spec:
+  difficulty: beginner
+  estimated_minutes: 120
+  xp: 150
+  prerequisites:
+    - terminal-navigation
+  competencies:
+    - file-operations
+  challenge:
+    type: practical
+    description: >
+      Complete as seguintes tarefas:
+      1. Crie 10 arquivos .txt em um diretório de teste
+      2. Copie todos os arquivos .txt para um subdiretório backup/
+      3. Renomeie 3 arquivos usando o comando mv
+      4. Crie um arquivo vazio usando touch
+      5. Use cat para concatenar 2 arquivos em um terceiro
+      6. Remova o diretório de teste e todo seu conteúdo
+      7. Documente cada comando em um arquivo README.md
+  evidence:
+    required: true
+    types:
+      - document
+  assessment:
+    rubric: terminal-accuracy

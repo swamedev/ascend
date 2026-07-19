@@ -1,0 +1,16 @@
+metadata:
+  id: python-foundations
+  version: 1.0.0
+  title: Python Foundations
+  description: Competências fundamentais para programação em Python
+  author: ASCEND Institute
+  license: MIT
+
+spec:
+  runtime: ">=1.0"
+  language: pt-BR
+  estimated_hours: 25
+  dependencies: []
+
+capabilities:
+  - evidence

@@ -1,0 +1,24 @@
+metadata:
+  id: html-foundations
+  title: HTML Foundations
+  description: Estruture páginas web com HTML semântico
+
+spec:
+  difficulty: beginner
+  estimated_minutes: 120
+  xp: 150
+  prerequisites: []
+  competencies:
+    - html-fundamental
+  challenge:
+    type: practical
+    description: >
+      Crie uma página HTML semântica apresentando um tema de sua escolha.
+      Utilize tags como header, nav, main, section, article, footer.
+      Inclua pelo menos uma imagem e uma lista.
+  evidence:
+    required: true
+    types:
+      - code
+  assessment:
+    rubric: html-quality

@@ -1,0 +1,15 @@
+spec:
+  achievements:
+    - id: primeiro-comando
+      name: Primeiro Comando
+      description: Executou seu primeiro comando no terminal Linux
+      criteria:
+        - "Completar a missão Terminal Navigation"
+      badge: badge-primeiro-comando
+
+    - id: mestre-dos-arquivos
+      name: Mestre dos Arquivos
+      description: Domina operações de arquivos no Linux
+      criteria:
+        - "Completar todas as missões de Linux Foundations"
+      badge: badge-mestre-arquivos

@@ -1,0 +1,28 @@
+metadata:
+  id: terminal-navigation
+  title: Terminal Navigation
+  description: Navegue pelo sistema de arquivos usando comandos de terminal
+
+spec:
+  difficulty: beginner
+  estimated_minutes: 90
+  xp: 120
+  prerequisites: []
+  competencies:
+    - terminal-basics
+  challenge:
+    type: practical
+    description: >
+      Complete as seguintes tarefas no terminal Linux:
+      1. Navegue até o diretório /var/log usando caminho absoluto
+      2. Liste todos os arquivos (incluindo ocultos) no diretório home
+      3. Crie uma estrutura de diretórios: ~/projetos/ascend/modulo-1
+      4. Use o comando pwd e echo para exibir informações do sistema
+      5. Salve o histórico dos comandos usados em um arquivo historico.txt
+  evidence:
+    required: true
+    types:
+      - document
+      - code
+  assessment:
+    rubric: terminal-accuracy

@@ -1,0 +1,22 @@
+spec:
+  competencies:
+    - id: python-syntax
+      name: Python Syntax
+      description: Capacidade de escrever programas Python com sintaxe correta
+      level: beginner
+      evidence_required: true
+      mastery_threshold: 80
+
+    - id: data-structures
+      name: Data Structures
+      description: Capacidade de usar listas, dicionários, tuplas e conjuntos
+      level: beginner
+      evidence_required: true
+      mastery_threshold: 75
+
+    - id: functions-modules
+      name: Functions and Modules
+      description: Capacidade de criar funções, módulos e organizar código
+      level: intermediate
+      evidence_required: true
+      mastery_threshold: 75

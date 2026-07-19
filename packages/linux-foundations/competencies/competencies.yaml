@@ -1,0 +1,22 @@
+spec:
+  competencies:
+    - id: terminal-basics
+      name: Terminal Basics
+      description: Capacidade de navegar pelo sistema de arquivos via terminal
+      level: beginner
+      evidence_required: true
+      mastery_threshold: 80
+
+    - id: file-operations
+      name: File Operations
+      description: Capacidade de criar, copiar, mover e remover arquivos e diretórios
+      level: beginner
+      evidence_required: true
+      mastery_threshold: 80
+
+    - id: permission-management
+      name: Permission Management
+      description: Capacidade de gerenciar permissões de arquivos e processos
+      level: intermediate
+      evidence_required: true
+      mastery_threshold: 75

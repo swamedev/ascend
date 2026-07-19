@@ -1,0 +1,10 @@
+metadata:
+  id: fundamentos-web
+  title: Fundamentos Web
+  description: Aprenda os fundamentos do desenvolvimento web com HTML e CSS
+
+spec:
+  difficulty: beginner
+  estimated_hours: 20
+  unlocks:
+    - logica-programacao

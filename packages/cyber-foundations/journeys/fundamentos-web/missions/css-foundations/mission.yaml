@@ -1,0 +1,25 @@
+metadata:
+  id: css-foundations
+  title: CSS Foundations
+  description: Estilize páginas web com CSS moderno
+
+spec:
+  difficulty: beginner
+  estimated_minutes: 180
+  xp: 200
+  prerequisites:
+    - html-foundations
+  competencies:
+    - css-fundamental
+  challenge:
+    type: practical
+    description: >
+      Estilize a página HTML criada na missão anterior.
+      Utilize Flexbox para layout, defina cores, fontes e espaçamentos.
+      Deixe a página responsiva para mobile e desktop.
+  evidence:
+    required: true
+    types:
+      - code
+  assessment:
+    rubric: css-quality

@@ -1,0 +1,16 @@
+metadata:
+  id: git-foundations
+  version: 1.0.0
+  title: Git Foundations
+  description: Competências fundamentais para controle de versão com Git
+  author: ASCEND Institute
+  license: MIT
+
+spec:
+  runtime: ">=1.0"
+  language: pt-BR
+  estimated_hours: 15
+  dependencies: []
+
+capabilities:
+  - evidence

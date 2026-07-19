@@ -1,0 +1,9 @@
+metadata:
+  id: git-essentials
+  title: Git Essentials
+  description: Aprenda controle de versão com Git do básico à colaboração remota
+
+spec:
+  difficulty: beginner
+  estimated_hours: 15
+  unlocks: []

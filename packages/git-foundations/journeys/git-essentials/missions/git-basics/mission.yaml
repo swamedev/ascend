@@ -1,0 +1,30 @@
+metadata:
+  id: git-basics
+  title: Git Basics
+  description: Inicialize repositórios, faça commits e entenda o fluxo básico do Git
+
+spec:
+  difficulty: beginner
+  estimated_minutes: 120
+  xp: 150
+  prerequisites: []
+  competencies:
+    - git-basics
+  challenge:
+    type: practical
+    description: >
+      Complete as seguintes tarefas:
+      1. Inicialize um repositório Git em um diretório novo
+      2. Crie 3 arquivos e faça commits separados para cada um
+      3. Verifique o log de commits e o status do repositório
+      4. Crie um arquivo .gitignore ignorando arquivos .log
+      5. Faça um commit incluindo apenas arquivos específicos
+      6. Desfaça uma alteração antes do commit usando restore
+      7. Documente todos os comandos utilizados
+  evidence:
+    required: true
+    types:
+      - code
+      - document
+  assessment:
+    rubric: git-quality

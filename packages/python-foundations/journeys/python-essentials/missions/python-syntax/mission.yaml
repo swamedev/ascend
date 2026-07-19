@@ -1,0 +1,28 @@
+metadata:
+  id: python-syntax
+  title: Python Syntax
+  description: Escreva programas Python com sintaxe correta e variáveis
+
+spec:
+  difficulty: beginner
+  estimated_minutes: 120
+  xp: 150
+  prerequisites: []
+  competencies:
+    - python-syntax
+  challenge:
+    type: practical
+    description: >
+      Escreva um programa Python que:
+      1. Solicite o nome e a idade do usuário
+      2. Calcule o ano de nascimento aproximado
+      3. Determine se é maior de idade
+      4. Exiba uma contagem regressiva de 10 até 0
+      5. Calcule a média de 4 notas informadas
+      6. Use f-strings para formatar a saída
+  evidence:
+    required: true
+    types:
+      - code
+  assessment:
+    rubric: python-quality

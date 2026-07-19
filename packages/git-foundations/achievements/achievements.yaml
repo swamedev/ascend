@@ -1,0 +1,8 @@
+spec:
+  achievements:
+    - id: primeiro-commit
+      name: Primeiro Commit
+      description: Fez seu primeiro commit no Git
+      criteria:
+        - "Completar a missão Git Basics"
+      badge: badge-primeiro-commit

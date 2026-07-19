@@ -1,76 +1,103 @@
-# ASCEND
+# ASCEND — Open Competency Runtime
 
-Competency Development Framework (CDF)
-
----
-
-## North Star
-
-> Toda competência reivindicada deve ser uma competência comprovada.
+> An Open Competency Runtime and Specification Ecosystem for Evidence-Based Learning.
 
 ---
 
-## What is ASCEND?
+## Quickstart
 
-ASCEND is a competency development framework that transforms learning into demonstrable, verifiable competence. It replaces superficial metrics (courses completed, hours watched, certificates earned) with **evidence-driven progression**.
-
-The system doesn't model courses. It models:
-
-```
-Builder → Journey → Missions → Challenges → Evidence → Competencies
-```
-
----
-
-## Current Status
-
-| Phase | Status |
-|-------|--------|
-| Foundation | ✅ Complete |
-| System Architecture | ✅ Complete |
-| Implementation Plan | ✅ Complete |
-| Sprint 0 — Bootstrap | ✅ Complete |
-| Sprint 1 — Core Domain | ✅ Complete |
-| Sprint 2 — Persistence Layer | ⬜ Pending |
-
----
-
-## Project Structure
-
-```
-ascend/
-├── foundation/       # Canonical documents (DOC-0000 to DOC-0008)
-├── architecture/     # System architecture (ARCH-0001 to ARCH-0006)
-├── docs/             # Build plans, prompts, ADRs
-├── src/ascend/       # Python implementation
-│   ├── domain/       # Pure domain entities
-│   ├── engine/       # Core engine
-│   ├── database/     # Persistence layer
-│   ├── agents/       # AI agent layer
-│   └── cli/          # Command-line interface
-├── packages/         # Learning packages
-├── tests/            # pytest test suite
-└── tools/            # Governance tooling
-```
-
----
-
-## Development
-
-**Requirements:** Python 3.11+
+### Installation
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate      # Linux/macOS
-.venv\Scripts\activate         # Windows
-pip install -e ".[dev]"
+pip install ascend-runtime
 ```
 
-**Run tests:**
+### Run Your First Package
+
+```python
+from ascend import Runtime
+
+runtime = Runtime()
+report = runtime.run(
+    package="packages/cyber-foundations",
+    builder="john",
+    evidence="<html><header>Meu site</header></html>"
+)
+
+print(report.summary())
+```
+
+### Via CLI
 
 ```bash
-python -m pytest
+ascend run packages/cyber-foundations --builder john --evidence resposta.html
 ```
+
+### Create a Package
+
+```bash
+ascend init my-package
+```
+
+```bash
+ascend package validate
+```
+
+---
+
+## Specifications
+
+| Spec | Description | Status |
+|---|---|---|
+| [APS v1.0](docs/spec/SPEC-0001_APS_v1.md) | ASCEND Package Specification | Stable |
+| [AEP v1.0](docs/spec/SPEC-0002_AEP_v1.md) | ASCEND Execution Protocol | Stable |
+| [ARP v0.1](docs/spec/SPEC-0003_ARP_v1.md) | ASCEND Registry Protocol | Draft |
+| [AAP v0.1](docs/spec/SPEC-0004_AAP_v1.md) | ASCEND Agent Protocol | Draft |
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────┐
+│                   CLI / API                  │
+├─────────────────────────────────────────────┤
+│              ASCEND Runtime Kernel           │
+│  ┌──────────┬──────────┬──────────────────┐  │
+│  │ Journey  │ Mission  │   Assessment     │  │
+│  │ Runner   │ Runner   │   Pipeline       │  │
+│  ├──────────┼──────────┼──────────────────┤  │
+│  │ Challenge│ Competency│   Event         │  │
+│  │ Runner   │ Engine   │   Collector      │  │
+│  └──────────┴──────────┴──────────────────┘  │
+│         RuntimeOrchestrator                  │
+├─────────────────────────────────────────────┤
+│              Domain Layer                     │
+├─────────────────────────────────────────────┤
+│           Infrastructure Layer                │
+└─────────────────────────────────────────────┘
+```
+
+---
+
+## Packages
+
+Official reference packages:
+
+| Package | Description | Status |
+|---|---|---|
+| cyber-foundations | Web development fundamentals | Published |
+| linux-foundations | Linux terminal essentials | Published |
+| git-foundations | Git version control basics | Published |
+| python-foundations | Python programming basics | Published |
+
+---
+
+## Project Status
+
+**Current Phase:** Phase 4 — Standardization  
+**Runtime Version:** 0.1.0  
+**Test Suite:** 163 tests, all passing  
 
 ---
 

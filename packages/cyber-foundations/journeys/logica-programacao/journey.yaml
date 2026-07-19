@@ -1,0 +1,9 @@
+metadata:
+  id: logica-programacao
+  title: Lógica de Programação
+  description: Aprenda lógica de programação com Python
+
+spec:
+  difficulty: beginner
+  estimated_hours: 10
+  unlocks: []

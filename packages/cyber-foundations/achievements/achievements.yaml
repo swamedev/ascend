@@ -1,0 +1,15 @@
+spec:
+  achievements:
+    - id: primeiro-site
+      name: Primeiro Site
+      description: Publicou seu primeiro site HTML/CSS
+      criteria:
+        - "Completar a jornada Fundamentos Web"
+      badge: badge-primeiro-site
+
+    - id: logica-zero
+      name: Lógica do Zero
+      description: Completou os fundamentos de lógica de programação
+      criteria:
+        - "Completar a jornada Lógica de Programação"
+      badge: badge-logica-zero

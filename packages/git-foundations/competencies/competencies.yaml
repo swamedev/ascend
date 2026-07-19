@@ -1,0 +1,22 @@
+spec:
+  competencies:
+    - id: git-basics
+      name: Git Basics
+      description: Capacidade de inicializar repositórios e fazer commits
+      level: beginner
+      evidence_required: true
+      mastery_threshold: 80
+
+    - id: branching-merging
+      name: Branching and Merging
+      description: Capacidade de gerenciar branches e resolver conflitos de merge
+      level: intermediate
+      evidence_required: true
+      mastery_threshold: 75
+
+    - id: remote-collaboration
+      name: Remote Collaboration
+      description: Capacidade de trabalhar com repositórios remotos e colaborar em equipe
+      level: intermediate
+      evidence_required: true
+      mastery_threshold: 75

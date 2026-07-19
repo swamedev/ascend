@@ -1,0 +1,9 @@
+metadata:
+  id: linux-essentials
+  title: Linux Essentials
+  description: Aprenda navegação e operações fundamentais no terminal Linux
+
+spec:
+  difficulty: beginner
+  estimated_hours: 20
+  unlocks: []

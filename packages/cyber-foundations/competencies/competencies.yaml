@@ -1,0 +1,22 @@
+spec:
+  competencies:
+    - id: html-fundamental
+      name: HTML Fundamental
+      description: Capacidade de estruturar páginas web com HTML semântico
+      level: beginner
+      evidence_required: true
+      mastery_threshold: 80
+
+    - id: css-fundamental
+      name: CSS Fundamental
+      description: Capacidade de estilizar páginas web com CSS moderno
+      level: beginner
+      evidence_required: true
+      mastery_threshold: 80
+
+    - id: logica-programacao
+      name: Lógica de Programação
+      description: Capacidade de resolver problemas com programação procedural
+      level: beginner
+      evidence_required: true
+      mastery_threshold: 75

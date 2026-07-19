@@ -1,0 +1,14 @@
+spec:
+  rubrics:
+    - id: terminal-accuracy
+      title: Precisão no Terminal
+      criteria:
+        comandos:
+          weight: 40
+          description: Uso correto dos comandos e flags
+        eficiencia:
+          weight: 30
+          description: Escolha eficiente de comandos para cada tarefa
+        seguranca:
+          weight: 30
+          description: Uso seguro de comandos que afetam o sistema

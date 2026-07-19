@@ -1,0 +1,14 @@
+spec:
+  rubrics:
+    - id: git-quality
+      title: Qualidade Git
+      criteria:
+        commits:
+          weight: 35
+          description: Commits atômicos e mensagens descritivas
+        branching:
+          weight: 35
+          description: Uso correto de branches e estratégia de branching
+        documentacao:
+          weight: 30
+          description: Documentação do fluxo de trabalho

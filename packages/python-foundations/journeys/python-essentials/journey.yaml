@@ -1,0 +1,9 @@
+metadata:
+  id: python-essentials
+  title: Python Essentials
+  description: Aprenda programação Python do básico à organização de código
+
+spec:
+  difficulty: beginner
+  estimated_hours: 25
+  unlocks: []

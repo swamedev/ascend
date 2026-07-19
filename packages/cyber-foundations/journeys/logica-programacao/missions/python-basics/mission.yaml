@@ -1,0 +1,26 @@
+metadata:
+  id: python-basics
+  title: Python Basics
+  description: "Fundamentos de Python: variáveis, condicionais e loops"
+
+spec:
+  difficulty: beginner
+  estimated_minutes: 150
+  xp: 200
+  prerequisites: []
+  competencies:
+    - logica-programacao
+  challenge:
+    type: practical
+    description: >
+      Escreva um programa em Python que:
+      1. Solicite o nome e idade do usuário
+      2. Determine se é maior de idade
+      3. Exiba uma contagem regressiva do número informado até zero
+      4. Calcule a média de 3 notas informadas
+  evidence:
+    required: true
+    types:
+      - code
+  assessment:
+    rubric: ""

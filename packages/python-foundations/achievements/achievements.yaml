@@ -1,0 +1,8 @@
+spec:
+  achievements:
+    - id: primeiro-script
+      name: Primeiro Script
+      description: Escreveu e executou seu primeiro script Python
+      criteria:
+        - "Completar a missão Python Syntax"
+      badge: badge-primeiro-script
