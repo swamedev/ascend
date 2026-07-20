@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: #F8FAFC;
-    --foreground: #0F172A;
-    --card: #ffffff;
-    --card-foreground: #0F172A;
-    --popover: #ffffff;
-    --popover-foreground: #0F172A;
-    --primary: #3366FF;
+    --background: var(--ascend-background);
+    --foreground: var(--ascend-foreground);
+    --card: var(--ascend-surface);
+    --card-foreground: var(--ascend-foreground);
+    --popover: var(--ascend-surface-elevated);
+    --popover-foreground: var(--ascend-foreground);
+    --primary: var(--ascend-brand-500);
     --primary-foreground: #ffffff;
-    --secondary: #F1F5F9;
-    --secondary-foreground: #1E293B;
-    --muted: #F1F5F9;
-    --muted-foreground: #64748B;
-    --accent: #D6E4FF;
-    --accent-foreground: #1F3D99;
-    --destructive: #EF4444;
+    --secondary: var(--ascend-muted);
+    --secondary-foreground: var(--ascend-foreground);
+    --muted: var(--ascend-muted);
+    --muted-foreground: var(--ascend-foreground-muted);
+    --accent: var(--ascend-accent);
+    --accent-foreground: var(--ascend-accent-foreground);
+    --destructive: var(--ascend-danger);
     --destructive-foreground: #ffffff;
-    --border: #E2E8F0;
-    --input: #E2E8F0;
-    --ring: #3366FF;
-    --radius: 0.5rem;
+    --border: var(--ascend-border);
+    --input: var(--ascend-border);
+    --ring: var(--ascend-brand-500);
+    --radius: var(--ascend-radius-md);
   }
 
   * {
@@ -33,5 +33,6 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
+    font-family: var(--ascend-font-sans);
   }
 }
