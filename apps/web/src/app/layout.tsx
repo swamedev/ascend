@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme/theme-provider'
+import { LayoutProvider } from '@/components/layout/layout-provider'
+import { AppShell } from '@/components/layout/app-shell'
 import { ThemeInspector } from '@/components/dev/theme-inspector'
 import '../../../../packages/tokens/src/generated/tokens.css'
 import './globals.css'
@@ -29,8 +31,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          <ThemeInspector />
+          <LayoutProvider>
+            <AppShell
+              workspace={children}
+            />
+            <ThemeInspector />
+          </LayoutProvider>
         </ThemeProvider>
       </body>
     </html>
