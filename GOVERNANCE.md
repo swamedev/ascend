@@ -74,3 +74,15 @@ Architecture Decision Records document significant decisions:
 ## License
 
 All code and specifications are licensed under MIT unless otherwise noted.
+
+---
+## Phase 2 Doctrine: The Feature Freeze Rule
+
+Conforme deliberação do Chief Architect e do Chief Product Officer na transição para a v1.0.0:
+
+> **NENHUMA nova funcionalidade (IA, GUI, Plugins, Network) será adicionada ao núcleo do ASCEND até que um grupo inicial de 10 a 20 *Early Adopters* tenha completado o pacote de referência (`cyber-foundations`) e fornecido feedback estruturado.**
+
+A prioridade absoluta da engenharia passa a ser:
+1. Developer Experience (DX) e Onboarding.
+2. Correção de bugs reportados por usuários reais.
+3. Documentação orientada ao usuário final.
