@@ -1,4 +1,17 @@
 from .collector import ObservationCollector
+from .detector import (
+    AccelerationRule,
+    ConsistencyScoreRule,
+    DetectionRule,
+    FrequencyBurstRule,
+    PatternDetector,
+    PerformanceGapRule,
+    SpikeRule,
+    StagnationRule,
+    ThresholdCrossingRule,
+    TrendDownRule,
+    TrendUpRule,
+)
 from .extractor import (
     CompositeExtractor,
     DirectExtractor,
@@ -8,10 +21,14 @@ from .extractor import (
 )
 from .models import (
     InMemoryObservationStore,
+    InMemoryPatternStore,
     InMemorySignalStore,
     NormalizedObservation,
     Observation,
     ObservationStore,
+    Pattern,
+    PatternStore,
+    PatternType,
     Signal,
     SignalStore,
     SignalType,
@@ -34,4 +51,19 @@ __all__ = [
     "CompositeExtractor",
     "SignalExtractor",
     "confidence_decay",
+    "PatternType",
+    "Pattern",
+    "PatternStore",
+    "InMemoryPatternStore",
+    "DetectionRule",
+    "TrendUpRule",
+    "TrendDownRule",
+    "SpikeRule",
+    "ThresholdCrossingRule",
+    "ConsistencyScoreRule",
+    "AccelerationRule",
+    "StagnationRule",
+    "FrequencyBurstRule",
+    "PerformanceGapRule",
+    "PatternDetector",
 ]

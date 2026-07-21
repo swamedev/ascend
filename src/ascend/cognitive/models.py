@@ -115,6 +115,86 @@ class InMemoryObservationStore:
         return len(self._observations)
 
 
+class PatternType(str, Enum):
+    TREND_UP = "trend_up"
+    TREND_DOWN = "trend_down"
+    SPIKE = "spike"
+    THRESHOLD_CROSSING = "threshold_crossing"
+    CONSISTENCY_SCORE = "consistency_score"
+    ACCELERATION = "acceleration"
+    STAGNATION = "stagnation"
+    FREQUENCY_BURST = "frequency_burst"
+    PERFORMANCE_GAP = "performance_gap"
+
+
+@dataclass
+class Pattern:
+    id: str
+    pattern_type: str
+    label: str
+    value: float
+    confidence: float
+    source_signal_ids: list[str]
+    observed_at: str
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
+class PatternStore(Protocol):
+    def save(self, pattern: Pattern) -> None: ...
+    def save_many(self, patterns: list[Pattern]) -> None: ...
+    def get_by_type(self, pattern_type: str) -> list[Pattern]: ...
+    def list_by_builder(
+        self, builder_id: str,
+        pattern_type: str | None = None,
+        limit: int = 50, offset: int = 0,
+    ) -> list[Pattern]: ...
+    def list_recent(
+        self, builder_id: str, pattern_type: str,
+        limit: int = 10,
+    ) -> list[Pattern]: ...
+    def count_all(self) -> int: ...
+
+
+class InMemoryPatternStore:
+    def __init__(self) -> None:
+        self._patterns: list[Pattern] = []
+
+    def save(self, pattern: Pattern) -> None:
+        self._patterns.append(pattern)
+
+    def save_many(self, patterns: list[Pattern]) -> None:
+        self._patterns.extend(patterns)
+
+    def get_by_type(self, pattern_type: str) -> list[Pattern]:
+        return [p for p in self._patterns if p.pattern_type == pattern_type]
+
+    def list_by_builder(
+        self, builder_id: str,
+        pattern_type: str | None = None,
+        limit: int = 50, offset: int = 0,
+    ) -> list[Pattern]:
+        filtered = [
+            p for p in self._patterns
+            if p.metadata.get("builderId") == builder_id
+            and (pattern_type is None or p.pattern_type == pattern_type)
+        ]
+        return filtered[offset: offset + limit]
+
+    def list_recent(
+        self, builder_id: str, pattern_type: str,
+        limit: int = 10,
+    ) -> list[Pattern]:
+        filtered = [
+            p for p in self._patterns
+            if p.metadata.get("builderId") == builder_id
+            and p.pattern_type == pattern_type
+        ]
+        return filtered[-limit:]
+
+    def count_all(self) -> int:
+        return len(self._patterns)
+
+
 class SignalStore(Protocol):
     def save(self, signal: Signal) -> None: ...
     def save_many(self, signals: list[Signal]) -> None: ...
