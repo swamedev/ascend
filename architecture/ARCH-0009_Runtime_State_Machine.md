@@ -533,6 +533,21 @@ t=0.7s  Report pronto         COMPLETED         ReportGenerated
 
 ---
 
+---
+
+## Stability Declaration
+
+> **The Runtime is frozen.**
+
+Starting from v1.0 Standard Edition, the Runtime Kernel (`ascend.runtime`) is considered **stable and frozen**. No changes may be made to it without:
+1. An approved RFC (see `docs/rfc/RFC_TEMPLATE.md`)
+2. Approval from the Technical Steering Committee (TSC)
+3. An Architecture Decision Record (ADR) documenting the rationale
+
+All platform development happens **around** the Runtime — through the Application Layer, API, and SDK — never inside it.
+
+---
+
 ## Appendix A: Comparação Runtime vs Domain State Machines
 
 | Dimensão | ARCH-0008 (Domain) | ARCH-0009 (Runtime) |
