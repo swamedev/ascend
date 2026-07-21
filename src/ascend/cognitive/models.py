@@ -246,3 +246,211 @@ class InMemorySignalStore:
 
     def count_all(self) -> int:
         return len(self._signals)
+
+
+# === Insight Models ===
+
+
+class InsightType(str, Enum):
+    DECLINING_PERFORMANCE = "declining_performance"
+    ACCELERATING_GROWTH = "accelerating_growth"
+    CONSISTENCY_BREAK = "consistency_break"
+    STRENGTH_IDENTIFIED = "strength_identified"
+    STAGNATION_WARNING = "stagnation_warning"
+    MILESTONE_ACHIEVED = "milestone_achieved"
+    IMPROVEMENT_OPPORTUNITY = "improvement_opportunity"
+    ENGAGEMENT_DROP = "engagement_drop"
+    STREAK_MILESTONE = "streak_milestone"
+
+
+class InsightSeverity(str, Enum):
+    INFO = "info"
+    WARNING = "warning"
+    CRITICAL = "critical"
+
+
+@dataclass
+class Insight:
+    id: str
+    insight_type: str
+    title: str
+    description: str
+    severity: str
+    confidence: float
+    source_pattern_ids: list[str]
+    generated_at: str
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
+class InsightStore(Protocol):
+    def save(self, insight: Insight) -> None: ...
+    def save_many(self, insights: list[Insight]) -> None: ...
+    def list_by_builder(
+        self, builder_id: str,
+        insight_type: str | None = None,
+        limit: int = 50, offset: int = 0,
+    ) -> list[Insight]: ...
+    def list_recent(
+        self, builder_id: str, insight_type: str,
+        limit: int = 10,
+    ) -> list[Insight]: ...
+    def count_all(self) -> int: ...
+
+
+class InMemoryInsightStore:
+    def __init__(self) -> None:
+        self._insights: list[Insight] = []
+
+    def save(self, insight: Insight) -> None:
+        self._insights.append(insight)
+
+    def save_many(self, insights: list[Insight]) -> None:
+        self._insights.extend(insights)
+
+    def list_by_builder(
+        self, builder_id: str,
+        insight_type: str | None = None,
+        limit: int = 50, offset: int = 0,
+    ) -> list[Insight]:
+        filtered = [
+            i for i in self._insights
+            if i.metadata.get("builderId") == builder_id
+            and (insight_type is None or i.insight_type == insight_type)
+        ]
+        return filtered[offset: offset + limit]
+
+    def list_recent(
+        self, builder_id: str, insight_type: str,
+        limit: int = 10,
+    ) -> list[Insight]:
+        filtered = [
+            i for i in self._insights
+            if i.metadata.get("builderId") == builder_id
+            and i.insight_type == insight_type
+        ]
+        return filtered[-limit:]
+
+    def count_all(self) -> int:
+        return len(self._insights)
+
+
+# === Recommendation Models ===
+
+
+class RecommendationType(str, Enum):
+    TRY_MISSION = "try_mission"
+    REPEAT_CONTENT = "repeat_content"
+    ADVANCE_CONTENT = "advance_content"
+    EXPLORE_NEW_AREA = "explore_new_area"
+    TAKE_BREAK = "take_break"
+    REVIEW_FOUNDATIONS = "review_foundations"
+    CELEBRATE = "celebrate"
+    FOCUS_AREA = "focus_area"
+    CHANGE_PACE = "change_pace"
+
+
+class RecommendationPriority(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    CRITICAL = "critical"
+
+
+@dataclass
+class Recommendation:
+    id: str
+    recommendation_type: str
+    title: str
+    description: str
+    priority: str
+    source_insight_ids: list[str]
+    generated_at: str
+    target: dict[str, Any] | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+
+class RecommendationStore(Protocol):
+    def save(self, recommendation: Recommendation) -> None: ...
+    def save_many(self, recommendations: list[Recommendation]) -> None: ...
+    def list_by_builder(
+        self, builder_id: str,
+        recommendation_type: str | None = None,
+        limit: int = 50, offset: int = 0,
+    ) -> list[Recommendation]: ...
+    def list_recent(
+        self, builder_id: str, recommendation_type: str,
+        limit: int = 10,
+    ) -> list[Recommendation]: ...
+    def count_all(self) -> int: ...
+
+
+class InMemoryRecommendationStore:
+    def __init__(self) -> None:
+        self._recommendations: list[Recommendation] = []
+
+    def save(self, recommendation: Recommendation) -> None:
+        self._recommendations.append(recommendation)
+
+    def save_many(self, recommendations: list[Recommendation]) -> None:
+        self._recommendations.extend(recommendations)
+
+    def list_by_builder(
+        self, builder_id: str,
+        recommendation_type: str | None = None,
+        limit: int = 50, offset: int = 0,
+    ) -> list[Recommendation]:
+        filtered = [
+            r for r in self._recommendations
+            if r.metadata.get("builderId") == builder_id
+            and (recommendation_type is None
+                 or r.recommendation_type == recommendation_type)
+        ]
+        return filtered[offset: offset + limit]
+
+    def list_recent(
+        self, builder_id: str, recommendation_type: str,
+        limit: int = 10,
+    ) -> list[Recommendation]:
+        filtered = [
+            r for r in self._recommendations
+            if r.metadata.get("builderId") == builder_id
+            and r.recommendation_type == recommendation_type
+        ]
+        return filtered[-limit:]
+
+    def count_all(self) -> int:
+        return len(self._recommendations)
+
+
+# === Timeline Models ===
+
+
+@dataclass
+class TimelineSnapshot:
+    id: str
+    builder_id: str
+    timestamp: str
+    signals: list[Signal] = field(default_factory=list)
+    patterns: list[Pattern] = field(default_factory=list)
+    insights: list[Insight] = field(default_factory=list)
+    recommendations: list[Recommendation] = field(default_factory=list)
+    summary: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class EvolutionPeriod:
+    start: str
+    end: str
+
+
+@dataclass
+class EvolutionViewResult:
+    builder_id: str
+    period: EvolutionPeriod
+    xp_growth: float = 0.0
+    completion_rate_avg: float = 0.0
+    pattern_counts: dict[str, int] = field(default_factory=dict)
+    insight_counts: dict[str, int] = field(default_factory=dict)
+    strengths: list[str] = field(default_factory=list)
+    weaknesses: list[str] = field(default_factory=list)
+    trends: list[dict[str, Any]] = field(default_factory=list)
