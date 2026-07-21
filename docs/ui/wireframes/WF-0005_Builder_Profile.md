@@ -1,0 +1,339 @@
+# WF-0005 — Builder Profile
+
+| Campo | Valor |
+|-------|-------|
+| **ID** | WF-0005 |
+| **Nome** | Builder Profile |
+| **Versão** | 1.0-DRAFT |
+| **Status** | Draft |
+| **Categoria** | Wireframe |
+| **Derivado de** | ARCH-0011, UI-0001, UI-0002, UI-0003 |
+| **Será utilizado por** | Frontend Sprint 3 |
+
+---
+
+## 1. Propósito
+
+O Builder Profile é o espelho da evolução do Builder.
+
+Ele mostra quem o Builder é, o que ele já conquistou, como está evoluindo e para onde está indo.
+
+É também onde o **Ascension Ring** vive como o símbolo central da identidade do Builder.
+
+---
+
+## 2. Ascension Ring — Especificação Completa
+
+### 2.1 Conceito
+
+O **Ascension Ring** é o componente mais emblemático do ASCEND.
+
+É um círculo vivo que representa visualmente o estado completo do Builder em um único golpe de vista.
+
+```
+                    ┌────┐
+                    │ 🔥 │  ← Camada externa: Streak (7 dias)
+                    │  7 │
+              ┌─────┴────┴─────┐
+              │   🧠 🧠 🧠 🧠   │  ← Camada média: Competências
+              │               │
+              │   ┌───────┐   │
+              │   │Level 5│   │  ← Centro: Nível
+              │   └───────┘   │
+              │   ┌───────┐   │
+              │   │450/800│   │  ← XP counter
+              │   └───────┘   │
+              │               │
+              └───────────────┘
+```
+
+### 2.2 Camadas
+
+| Camada | Conteúdo | Visualização |
+|--------|----------|--------------|
+| **Centro** | Level number | Texto grande, bold, brand color |
+| **Anel Interno** | XP Bar (circular) | Progress ring animado, purple gradient |
+| **Anel Médio** | Competências ativas | Pequenos ícones pulsando |
+| **Anel Externo** | Streak indicator | Chama/contorno dourado quando ativo |
+| **Borda** | Achievement glow | Efeito de brilho quando novo achievement |
+
+### 2.3 Animações
+
+| Evento | Animação | Duration |
+|--------|----------|----------|
+| Level up | Ring pulse outward, number scale + glow | 800ms |
+| XP gain | Ring fill animates, counter increments | 400ms |
+| Streak day | New flame appears, ring flickers | 300ms |
+| New competency | Icon slides into ring with glow | 500ms |
+| Achievement | Golden border glow pulse | 600ms |
+| Idle | Subtle breathing pulse (opacity 0.95→1) | 3s loop |
+
+### 2.4 Estados
+
+| State | Visual |
+|-------|--------|
+| **New (Level 1)** | Ring small, no glow, one competency empty |
+| **Active** | Ring full, XP animating, competencies pulsing |
+| **Leveling** | Ring expanding, number changing, burst |
+| **Streak** | Outer ring orange glow, flames visible |
+| **Achievement** | Golden border, subtle confetti |
+
+### 2.5 Responsividade
+
+| Tamanho | Diâmetro | Uso |
+|---------|----------|-----|
+| `sm` | 80px | Sidebar, cards |
+| `md` | 120px | Profile header |
+| `lg` | 180px | Profile page hero |
+| `xl` | 240px | Achievement celebration |
+
+---
+
+## 3. Wireframe Desktop
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│ 🔷 ASCEND  >  My Profile                            ⚙️ Edit    │
+│ ┌──────┬──────────────────────────────────────────────────────┐ │
+│ │      │                                                      │ │
+│ │      │  ┌──────────────────────────────────────────────┐    │ │
+│ │      │  │              ┌───────────┐                    │    │ │
+│ │      │  │              │ Level 5   │    👤 BuilderName  │    │ │
+│ │      │  │              │ ┌───────┐ │    🗡️ Linux Admin  │    │ │
+│ │      │  │              │ │450    │ │    🔥 7-day streak │    │ │
+│ │      │  │              │ │ XP    │ │    📍 Joined Jul 2026│   │ │
+│ │      │  │              │ └───────┘ │                    │    │ │
+│ │      │  │              │ ▓▓▓ 800   │    [Share Profile]  │    │ │
+│ │      │  │              └───────────┘                    │    │ │
+│ │      │  └──────────────────────────────────────────────┘    │ │
+│ │      │                                                      │ │
+│ │      │  ┌─ Stats Grid ────────────────────────────────────┐ │ │
+│ │      │  │ ┌──────┐ ┌────────┐ ┌────────┐ ┌─────────────┐ │ │ │
+│ │      │  │ │ 24   │ │   12   │ │   47   │ │    34 🔥    │ │ │ │
+│ │      │  │ │Missions│ │Badges │ │Badges │ │Streak days  │ │ │ │
+│ │      │  │ └──────┘ └────────┘ └────────┘ └─────────────┘ │ │ │
+│ │      │  │ ┌──────┐ ┌────────┐ ┌────────┐ ┌─────────────┐ │ │ │
+│ │      │  │ │ 156h │ │ 4,500  │ │   6    │ │    1        │ │ │ │
+│ │      │  │ │Study  │ │XP total│ │Compet. │ │Certificate  │ │ │ │
+│ │      │  │ └──────┘ └────────┘ └────────┘ └─────────────┘ │ │ │
+│ │      │  └────────────────────────────────────────────────┘ │ │
+│ │      │                                                      │ │
+│ │      │  ┌─ XP History (Chart) ────────────────────────────┐ │ │
+│ │      │  │   XP Over Time                                   │ │ │
+│ │      │  │   ▲                                              │ │ │
+│ │      │  │   │    ▄▄▄                                      │ │ │
+│ │      │  │   │   █  █ ▄  ▄▄                                │ │ │
+│ │      │  │   │   █  █ █▄ ██ ▄  ▄▄                          │ │ │
+│ │      │  │   │  ▄█  █ ██ ██ █▄ ██ ▄▄                       │ │ │
+│ │      │  │   └─────────────────────►                       │ │ │
+│ │      │  │   Jul  Aug  Sep  Oct  Nov  Dec  Jan             │ │ │
+│ │      │  └────────────────────────────────────────────────┘ │ │
+│ │      │                                                      │ │
+│ │      │  ┌─ Competencies ─────────────────────────────┐     │ │
+│ │      │  │ 🖥️ File Management          L3 ▓▓▓▓▓▓▓ 100% │     │ │
+│ │      │  │ 👥 User Administration      L2 ▓▓▓▓▓▓▓  92% │     │ │
+│ │      │  │ 🌐 Networking Basics         L1 ▓▓▓▓░░░  45% │     │ │
+│ │      │  │ 🔐 Security Basics          L0 ░░░░░░░   0% │     │ │
+│ │      │  └────────────────────────────────────────────┘     │ │
+│ │      │                                                      │ │
+│ │      │  ┌─ Badges ─────────────────────────────────────┐   │ │
+│ │      │  │ ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐ ┌────┐  │   │ │
+│ │      │  │ │🌟 │ │🔥 │ │⚡ │ │🛡️ │ │🏆 │ │🔒 │  │   │ │
+│ │      │  │ │First│ │Cons│ │Fast│ │Secu│ │Exp │ │Lock│  │   │ │
+│ │      │  │ │Steps│ │tent│ │    │ │rity│ │orer│ │ed  │  │   │ │
+│ │      │  │ └────┘ └────┘ └────┘ └────┘ └────┘ └────┘  │   │ │
+│ │      │  └────────────────────────────────────────────┘   │ │
+│ │      │                                                      │ │
+│ │      │  ┌─ Timeline ───────────────────────────────────┐   │ │
+│ │      │  │ 🗡️ Completed: Linux #4                  2h ago   │ │
+│ │      │  │ 🏅 Badge: "File Manager"                 5h ago   │ │
+│ │      │  │ 📁 Evidence approved: Linux #3           1d ago   │ │
+│ │      │  │ 🎉 Level 4 → 5                          3d ago   │ │
+│ │      │  │ 🤖 Mentor: new suggestion                4d ago   │ │
+│ │      │  └────────────────────────────────────────────┘   │ │
+│ └──────┴──────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 4. Wireframe Tablet (768px)
+
+```
+┌──────────────────────────────────────────────────┐
+│ 🔷 ASCEND  >  My Profile              ⚙️ Edit   │
+├──────────────────────────────────────────────────┤
+│                                                   │
+│  ┌───────────┐   👤 BuilderName                  │
+│  │ Level 5   │   🗡️ Linux Admin                 │
+│  │ 450/800   │   🔥 7-day streak                │
+│  └───────────┘                                   │
+│                                                   │
+│ ┌──────┐ ┌────────┐ ┌────────┐ ┌─────────────┐  │
+│ │ 24   │ │   12   │ │   47   │ │    34 🔥    │  │
+│ │Missions│  Badges  │Compet.   │Streak days   │  │
+│ └──────┘ └────────┘ └────────┘ └─────────────┘  │
+│                                                   │
+│ ┌─ XP History ─────────────────────────────────┐ │
+│ │   ▄▄▄                                       │ │
+│ │  █ █ ▄ ▄▄                                   │ │
+│ │  █ █ █▄██ ▄▄                                │ │
+│ └────────────────────────────────────────────┘ │
+│                                                   │
+│ ┌─ Competencies ───────────────────────────────┐ │
+│ │ 🖥️ File Mgmt       L3 ▓▓▓▓▓▓▓ 100%         │ │
+│ │ 👥 User Admin       L2 ▓▓▓▓▓▓▓  92%         │ │
+│ └────────────────────────────────────────────┘ │
+│                                                   │
+│ ┌─ Badges ─────────────────────────────────────┐ │
+│ │ [🌟] [🔥] [⚡] [🛡️] [🏆] [🔒]              │ │
+│ └────────────────────────────────────────────┘ │
+│                                                   │
+│ 🏠 🗡️ 🧠 🤖 🌐 ⚙️                                 │
+└──────────────────────────────────────────────────┘
+```
+
+---
+
+## 5. Wireframe Mobile (<768px)
+
+```
+┌──────────────────────────┐
+│ 🔷 Profile      ⚙️      │
+├──────────────────────────┤
+│  ┌─────────┐            │
+│  │ Level 5 │ 👤 Builder │
+│  │450/800  │ 🔥 7d      │
+│  └─────────┘            │
+├──────────────────────────┤
+│ 📊 Stats                 │
+│ 24 Missions             │
+│ 12 Badges               │
+│ 6 Competencies          │
+│ 156h Study              │
+├──────────────────────────┤
+│ 📈 XP History            │
+│ ▄▄▄ █ ▄ ▄▄              │
+├──────────────────────────┤
+│ 🧠 Competencies          │
+│ File Mgmt       L3 100% │
+│ User Admin      L2 92%  │
+│ Network         L1 45%  │
+├──────────────────────────┤
+│ 🏅 Badges (6/12)        │
+│ [🌟][🔥][⚡][🛡️][🏆][🔒]│
+├──────────────────────────┤
+│ 📅 Timeline              │
+│ 🗡️ Linux #4      2h ago │
+│ 🏅 Badge         5h ago │
+├──────────────────────────┤
+│ 🏠 🗡️ 🧠 🤖 🌐 ⚙️       │
+└──────────────────────────┘
+```
+
+---
+
+## 6. XP History Chart
+
+### 6.1 Chart Spec
+
+| Property | Value |
+|----------|-------|
+| **Type** | Area chart with gradient fill |
+| **X axis** | Time (weekly buckets) |
+| **Y axis** | XP earned |
+| **Interaction** | Hover: tooltip with exact value + date |
+| **Empty state** | "Start your first mission to see your XP growth" |
+| **Period** | Last 6 months (default), toggle for 1y, all |
+
+### 6.2 Chart States
+
+| State | Visual |
+|-------|--------|
+| Loading | Skeleton rectangle with shimmer |
+| Empty | Flat line + illustration + CTA |
+| Normal | Gradient area + line (brand color) |
+| Streak active | Small flame icons on active days |
+| Level up markers | Vertical dashed lines with level number |
+
+---
+
+## 7. Learning Velocity
+
+A velocidade de aprendizado é calculada como:
+
+```
+Learning Velocity = XP_per_week / Active_weeks
+```
+
+Exibida como:
+
+```
+📈 Learning Velocity: 350 XP/week
+    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░  vs last month (+12%)
+```
+
+---
+
+## 8. Timeline
+
+A timeline do perfil mostra todos os marcos do Builder:
+
+| Event Type | Icon | Cor |
+|------------|------|-----|
+| Mission complete | 🗡️ | Brand |
+| Achievement | 🏅 | Gold |
+| Level up | 🎉 | Purple |
+| Evidence approved | 📁 | Green |
+| Certificate | 📜 | Platinum |
+| Mentor suggestion | 🤖 | Blue |
+
+---
+
+## 9. States
+
+| State | Comportamento |
+|-------|---------------|
+| **Loading** | Skeleton do Ascension Ring + cards |
+| **New user** | Ring minimal (Level 1, 0 XP), "Complete your first mission" CTA |
+| **Active** | Ring completo, gráficos populados |
+| **Error** | "Could not load profile" + [Retry] |
+
+---
+
+## 10. Motion Timeline
+
+| Component | Animation | Duration | Delay |
+|-----------|-----------|----------|-------|
+| Ascension Ring | `scale-in` + ring fill | 600ms | 0 |
+| Stats grid | `fade-in` stagger | 200ms each | 300ms |
+| XP chart | `draw-chart` (SVG animate) | 800ms | 500ms |
+| Competency list | `slide-up` stagger | 200ms each | 400ms |
+| Badge grid | `scale-in` stagger | 150ms each | 600ms |
+| Timeline | `slide-up` | 300ms | 700ms |
+
+---
+
+## 11. Definition of Done
+
+WF-0005 aprovado quando:
+
+- [ ] Ascension Ring completamente especificado
+- [ ] Ascension Ring: camadas, animações, estados, responsividade
+- [ ] Wireframe Desktop completo
+- [ ] Wireframe Tablet completo
+- [ ] Wireframe Mobile completo
+- [ ] XP History Chart especificado
+- [ ] Learning Velocity definida
+- [ ] Timeline de eventos especificada
+- [ ] Estados (loading, new, active, error) documentados
+- [ ] Motion timeline completa
+
+---
+
+## Status
+
+**WF-0005 — Builder Profile**
+
+- Estado: ✅ Completo
+- Próximo: WF-0006 — Evidence Center
