@@ -1,14 +1,14 @@
-# ARCH-0008 — Persistence Architecture
+# ARCH-0007 — Persistence Architecture
 
 | Campo | Valor |
 |-------|-------|
-| **ID** | ARCH-0008 |
+| **ID** | ARCH-0007 |
 | **Nome** | Persistence Architecture |
 | **Versão** | 1.0 |
 | **Status** | Approved |
 | **Categoria** | Architecture |
 | **Owner** | Chief Architect |
-| **Derivado de** | ARCH-0005 Data Model, ARCH-0007 Application Architecture, DOC-0009 Architectural Invariants |
+| **Derivado de** | ARCH-0005 Data Model, DOC-0009 Architectural Invariants |
 
 ## 1. Philosophy
 
@@ -196,7 +196,7 @@ A infraestrutura NÃO DEPENDE de:
 
 ## Definition of Done
 
-ARCH-0008 implementado quando:
+ARCH-0007 implementado quando:
 
 - [x] Connection Manager criado
 - [x] Repository Base criado
@@ -208,7 +208,7 @@ ARCH-0008 implementado quando:
 
 ## Status
 
-**ARCH-0008 — Persistence Architecture**
+**ARCH-0007 — Persistence Architecture**
 
 - Estado: ✅ Approved
 - Próximo: Implementação no Sprint 003 — Infrastructure Foundation

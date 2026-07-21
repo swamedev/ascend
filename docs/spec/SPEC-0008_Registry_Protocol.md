@@ -1,8 +1,8 @@
-# SPEC-0003 — ASCEND Registry Protocol
+# SPEC-0008 — ASCEND Registry Protocol
 
 | Campo | Valor |
 |-------|-------|
-| **ID** | SPEC-0003 |
+| **ID** | SPEC-0008 |
 | **Nome** | Registry Protocol |
 | **Versão** | 1.0 |
 | **Status** | Draft |
@@ -122,7 +122,7 @@ O Registry resolve a árvore de dependências antes de instalar.
 
 ## Status
 
-**SPEC-0003 — Registry Protocol**
+**SPEC-0008 — Registry Protocol**
 
 - Estado: 🟡 Draft
 - Próximo: Implementação após Package Engine e CLI

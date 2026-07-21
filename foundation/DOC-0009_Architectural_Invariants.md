@@ -219,11 +219,27 @@ Each stage must satisfy:
 - Unit tests must verify determinism by running each stage twice with identical inputs and asserting identical outputs
 - The CI pipeline (`ascend doctor --workflow`) will flag any stage that imports `random`, `numpy.random`, LLM SDKs, or HTTP clients
 
+### I19 — Evidence API Surface
+
+Evidence is a first-class domain entity and must have a dedicated API router.
+
+1. **Dedicated router.** Evidence must have its own `api/routers/evidence.py` with CRUD or read-only endpoints as appropriate.
+2. **Not hidden behind other entities.** Evidence must not be accessible only through mission or journey routers. Discovery by evidence is a primary use case.
+3. **Evidence query must support filtering by builder, competency, mission, and date range.**
+4. **Evidence retrieval must include metadata.** Every response must include `evidence_id`, `builder_id`, `mission_id`, `competency_id`, `submitted_at`, `status`, and `evidence_text` (or a summary).
+
+**Rationale:** The current architecture serves evidence through mission/journey routers, making it invisible as a standalone entity. This violates I2 (competency requires evidence) by making evidence hard to query independently. A dedicated evidence router enables evidence-based analytics, auditing, and the cognitive pipeline.
+
+**Enforcement:**
+- `ascend doctor --architecture` will check for the existence of `api/routers/evidence.py`
+- API tests must include a test that fetches evidence by builder_id without referencing a mission
+
 ## Change History
 
 | Version | Date | Author | Change |
 |---------|------|--------|--------|
 | 7.0 | 2026-07-21 | Chief Architect | Added I18 — Cognitive Pipeline Determinism (OPERAÇÃO ORACLE II) |
+| 6.1 | 2026-07-21 | Chief Architect | Added I19 — Evidence API Surface (OPERAÇÃO HADES) |
 | 6.0 | 2026-07-21 | Chief Architect | Added I17 — Repository Integrity (OPERAÇÃO HERMES II) |
 | 5.0 | 2026-07-21 | Chief Architect | Added I16 — Observation Append Only (OPERAÇÃO PROMETHEUS) |
 | 4.0 | 2026-07-20 | Chief Architect | Added I15 — Observation Determinism (OPERAÇÃO OLYMPUS) |

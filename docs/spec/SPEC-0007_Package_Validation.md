@@ -1,8 +1,8 @@
-# SPEC-0002 — Package Validation Rules
+# SPEC-0007 — Package Validation Rules
 
 | Campo | Valor |
 |-------|-------|
-| **ID** | SPEC-0002 |
+| **ID** | SPEC-0007 |
 | **Nome** | Package Validation Rules |
 | **Versão** | 1.0 |
 | **Status** | Approved |
@@ -94,7 +94,7 @@ O validador deve retornar:
 
 ## Status
 
-**SPEC-0002 — Package Validation Rules**
+**SPEC-0007 — Package Validation Rules**
 
 - Estado: ✅ Approved
 - Próximo: Implementação do validador no Package Engine
