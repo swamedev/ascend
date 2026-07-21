@@ -58,4 +58,38 @@ export const api = {
   getCompetencies: (builderId: string) => request<CompetencyData[]>(`/builders/${builderId}/competencies`),
 
   getAchievements: (builderId: string) => request<AchievementData[]>(`/builders/${builderId}/achievements`),
+
+  getCognitiveObservations: (builderId: string, limit = 50) =>
+    request<PaginatedResponse<any>>(`/cognitive/observations?builder_id=${builderId}&limit=${limit}`),
+
+  getCognitiveSignals: (builderId: string, signalType?: string, limit = 50) => {
+    let path = `/cognitive/signals?builder_id=${builderId}&limit=${limit}`
+    if (signalType) path += `&signal_type=${signalType}`
+    return request<PaginatedResponse<any>>(path)
+  },
+
+  getCognitivePatterns: (builderId: string, patternType?: string, limit = 50) => {
+    let path = `/cognitive/patterns?builder_id=${builderId}&limit=${limit}`
+    if (patternType) path += `&pattern_type=${patternType}`
+    return request<PaginatedResponse<any>>(path)
+  },
+
+  getCognitiveInsights: (builderId: string, insightType?: string, limit = 50) => {
+    let path = `/cognitive/insights?builder_id=${builderId}&limit=${limit}`
+    if (insightType) path += `&insight_type=${insightType}`
+    return request<PaginatedResponse<any>>(path)
+  },
+
+  getCognitiveRecommendations: (builderId: string, recType?: string, limit = 50) => {
+    let path = `/cognitive/recommendations?builder_id=${builderId}&limit=${limit}`
+    if (recType) path += `&recommendation_type=${recType}`
+    return request<PaginatedResponse<any>>(path)
+  },
+
+  getCognitiveTimeline: (builderId: string, startDate?: string, endDate?: string) => {
+    let path = `/cognitive/timeline?builder_id=${builderId}`
+    if (startDate) path += `&start_date=${startDate}`
+    if (endDate) path += `&end_date=${endDate}`
+    return request<any>(path)
+  },
 }

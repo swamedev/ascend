@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
-import { Rocket, Target, Award, Zap, BookOpen, CheckCircle, Trophy } from 'lucide-react'
+import { Rocket, Target, Award, Zap, BookOpen, CheckCircle, Trophy, TrendingUp, TrendingDown, AlertTriangle, Lightbulb, BarChart3, Activity } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { api } from '@/lib/api'
 import { useAuthStore } from '@/store/auth-store'
@@ -49,6 +49,30 @@ export default function DashboardPage() {
   const achievementsQuery = useQuery({
     queryKey: ['achievements', builderId],
     queryFn: () => api.getAchievements(builderId!),
+    enabled: !!builderId,
+  })
+
+  const patternsQuery = useQuery({
+    queryKey: ['cognitive-patterns', builderId],
+    queryFn: () => api.getCognitivePatterns(builderId!, undefined, 20),
+    enabled: !!builderId,
+  })
+
+  const insightsQuery = useQuery({
+    queryKey: ['cognitive-insights', builderId],
+    queryFn: () => api.getCognitiveInsights(builderId!, undefined, 20),
+    enabled: !!builderId,
+  })
+
+  const recommendationsQuery = useQuery({
+    queryKey: ['cognitive-recommendations', builderId],
+    queryFn: () => api.getCognitiveRecommendations(builderId!, undefined, 10),
+    enabled: !!builderId,
+  })
+
+  const timelineQuery = useQuery({
+    queryKey: ['cognitive-timeline', builderId],
+    queryFn: () => api.getCognitiveTimeline(builderId!),
     enabled: !!builderId,
   })
 
@@ -214,8 +238,110 @@ export default function DashboardPage() {
             )}
           </div>
         </section>
+
+        {insightsQuery.data?.data?.length > 0 && (
+          <section className="space-y-4">
+            <h2 className="text-lg font-semibold">Learning Trends</h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {insightsQuery.data.data.slice(0, 4).map((insight: any) => (
+                <Card key={insight.id} variant="bordered" padding="md">
+                  <CardContent className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <SeverityIcon severity={insight.severity} />
+                      <span className="font-medium text-sm">{insight.title}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{insight.description}</p>
+                    <div className="flex items-center gap-3 text-xs">
+                      <span className={cn(
+                        'px-1.5 py-0.5 rounded',
+                        insight.severity === 'critical' && 'bg-red-100 text-red-700',
+                        insight.severity === 'warning' && 'bg-yellow-100 text-yellow-700',
+                        insight.severity === 'info' && 'bg-blue-100 text-blue-700',
+                      )}>
+                        {insight.severity}
+                      </span>
+                      <span>{(insight.confidence * 100).toFixed(0)}% confidence</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {patternsQuery.data?.data?.length > 0 && (
+          <section className="space-y-4">
+            <h2 className="text-lg font-semibold">Consistency & Evolution</h2>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              {patternsQuery.data.data.slice(0, 6).map((pattern: any) => (
+                <Card key={pattern.id} variant="bordered" padding="sm">
+                  <CardContent className="flex items-center gap-3 py-3">
+                    <PatternIcon patternType={pattern.pattern_type} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium truncate">{pattern.label}</p>
+                      <p className="text-[10px] text-muted-foreground">
+                        value: {pattern.value} | confidence: {(pattern.confidence * 100).toFixed(0)}%
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {recommendationsQuery.data?.data?.length > 0 && (
+          <section className="space-y-4">
+            <h2 className="text-lg font-semibold">Recommendations</h2>
+            <div className="grid grid-cols-1 gap-3">
+              {recommendationsQuery.data.data.slice(0, 5).map((rec: any) => (
+                <Card key={rec.id} variant="bordered" padding="md">
+                  <CardContent className="flex items-start gap-3">
+                    <Lightbulb className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-sm">{rec.title}</span>
+                        <PriorityBadge priority={rec.priority} />
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-1">{rec.description}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </main>
+  )
+}
+
+function SeverityIcon({ severity }: { severity: string }) {
+  if (severity === 'critical') return <AlertTriangle className="h-4 w-4 text-red-500" />
+  if (severity === 'warning') return <AlertTriangle className="h-4 w-4 text-yellow-500" />
+  return <Lightbulb className="h-4 w-4 text-blue-500" />
+}
+
+function PatternIcon({ patternType }: { patternType: string }) {
+  if (patternType === 'trend_up') return <TrendingUp className="h-4 w-4 text-green-500" />
+  if (patternType === 'trend_down') return <TrendingDown className="h-4 w-4 text-red-500" />
+  if (patternType === 'spike') return <Activity className="h-4 w-4 text-orange-500" />
+  if (patternType === 'consistency_score') return <BarChart3 className="h-4 w-4 text-blue-500" />
+  if (patternType === 'stagnation') return <AlertTriangle className="h-4 w-4 text-yellow-500" />
+  return <Activity className="h-4 w-4 text-muted-foreground" />
+}
+
+function PriorityBadge({ priority }: { priority: string }) {
+  const colors: Record<string, string> = {
+    critical: 'bg-red-100 text-red-700',
+    high: 'bg-orange-100 text-orange-700',
+    medium: 'bg-blue-100 text-blue-700',
+    low: 'bg-gray-100 text-gray-600',
+  }
+  return (
+    <span className={cn('px-1.5 py-0.5 rounded text-[10px] font-medium', colors[priority] || colors.low)}>
+      {priority}
+    </span>
   )
 }
 

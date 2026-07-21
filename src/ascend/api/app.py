@@ -17,7 +17,7 @@ from ascend.adapter.runtime_adapter import RuntimeAdapter
 from ascend.api.middleware.correlation import CorrelationMiddleware
 from ascend.api.middleware.error_handler import ErrorHandlerMiddleware
 from ascend.api.middleware.logger import RequestLogMiddleware
-from ascend.api.routers import auth, builder, demo, health, journey, mission, version
+from ascend.api.routers import auth, builder, cognitive, demo, health, journey, mission, version
 
 APP_TITLE = "ASCEND API"
 APP_VERSION = "1.0.0"
@@ -62,6 +62,7 @@ def create_app(db_path: str | None = None) -> FastAPI:
     app.include_router(health.router)
     app.include_router(version.router)
     app.include_router(builder.router)
+    app.include_router(cognitive.router)
     app.include_router(auth.router)
     app.include_router(demo.router)
     app.include_router(journey.router)
