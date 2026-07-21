@@ -100,6 +100,8 @@ Execute this before every single task:
 | **Never** | Alter protocols without an ADR |
 | **Never** | Commit without review |
 | **Never** | Start coding if `git status` is dirty |
+| **Never** | Use AI, randomness, or external state in Cognitive Pipeline stages |
+| **Never** | Break determinism — same inputs must always produce same outputs |
 | **Never** | Leave the repository dirty |
 | **Never** | Accumulate >10 files or >500 lines without commit |
 | **Never** | Commit with a forbidden message |

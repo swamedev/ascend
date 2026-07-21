@@ -4,7 +4,7 @@
 |-------|-------|
 | **ID** | DOC-0009 |
 | **Nome** | Architectural Invariants |
-| **Versão** | 4.0 |
+| **Versão** | 7.0 |
 | **Status** | Approved |
 | **Categoria** | Architecture |
 | **Owner** | Chief Architect |
@@ -195,10 +195,35 @@ Every logical unit of work must end with:
 
 **Failure to comply with I17 triggers mandatory RECOVERY_PROTOCOL.md execution.** Repeated violations may result in loss of commit privileges.
 
+### I18 — Cognitive Pipeline Determinism
+
+Every stage of the Cognitive Pipeline must be a deterministic, pure function of its input.
+
+**Pipeline stages:**
+
+```
+ObservationCollection → Normalization → SignalExtraction → PatternDetection → InsightGeneration → Recommendation
+```
+
+Each stage must satisfy:
+1. **Same input → same output.** Given the same sequence of events, every stage produces identical output regardless of environment, time, or execution count.
+2. **No randomness.** No stage may use random number generation, sampling, or probabilistic algorithms in deterministic mode.
+3. **No AI.** No stage may invoke AI models, LLMs, or non-deterministic external services.
+4. **No external state.** No stage may depend on mutable global state, wall-clock time (except timestamps from the input event), or environment-specific configuration.
+5. **Lineage preservation.** Every output must carry references to its source inputs, enabling full traceability through the pipeline.
+
+**Rationale:** Determinism is what makes the Cognitive Layer testable, auditable, and replayable. If a Pattern Detector produces different results for the same signals on different runs, the system cannot be validated. AI augmentation is permitted ONLY at a separate, explicitly marked post-processing layer that sits outside the deterministic pipeline — and even then, the deterministic pipeline output must be preserved unmodified alongside any AI-enhanced output.
+
+**Enforcement:**
+- Every stage implementation must be a `Protocol` with a pure function signature
+- Unit tests must verify determinism by running each stage twice with identical inputs and asserting identical outputs
+- The CI pipeline (`ascend doctor --workflow`) will flag any stage that imports `random`, `numpy.random`, LLM SDKs, or HTTP clients
+
 ## Change History
 
 | Version | Date | Author | Change |
 |---------|------|--------|--------|
+| 7.0 | 2026-07-21 | Chief Architect | Added I18 — Cognitive Pipeline Determinism (OPERAÇÃO ORACLE II) |
 | 6.0 | 2026-07-21 | Chief Architect | Added I17 — Repository Integrity (OPERAÇÃO HERMES II) |
 | 5.0 | 2026-07-21 | Chief Architect | Added I16 — Observation Append Only (OPERAÇÃO PROMETHEUS) |
 | 4.0 | 2026-07-20 | Chief Architect | Added I15 — Observation Determinism (OPERAÇÃO OLYMPUS) |
