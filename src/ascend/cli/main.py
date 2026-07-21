@@ -26,7 +26,10 @@ def main() -> None:
     init_parser = sub.add_parser("init", help="Initialize a new package")
     init_parser.add_argument("name", nargs="?", default="my-package", help="Package name")
 
-    sub.add_parser("doctor", help="Check system health")
+    doctor_parser = sub.add_parser("doctor", help="Check system health")
+    doctor_parser.add_argument("--workflow", action="store_true", help="Run workflow enforcement checks")
+    doctor_parser.add_argument("--release", action="store_true", help="Run release readiness checks")
+    doctor_parser.add_argument("--mode", choices=["architecture", "workflow", "release"], help="Check mode")
 
     prog_parser = sub.add_parser("progress", help="Show builder progress")
     prog_parser.add_argument("--builder", default="default", help="Builder username")
@@ -42,7 +45,7 @@ def main() -> None:
     elif args.command == "init":
         _cmd_init(args)
     elif args.command == "doctor":
-        _cmd_doctor()
+        _cmd_doctor(args)
     elif args.command == "progress":
         _cmd_progress(args)
     else:
@@ -115,9 +118,16 @@ def _cmd_init(args: argparse.Namespace) -> None:
     _cmd_package_create(args)
 
 
-def _cmd_doctor() -> None:
+def _cmd_doctor(args: argparse.Namespace) -> None:
     from ascend.cli.doctor import run as doctor_run
-    doctor_run()
+    if args.workflow:
+        doctor_run("workflow")
+    elif args.release:
+        doctor_run("release")
+    elif args.mode:
+        doctor_run(args.mode)
+    else:
+        doctor_run("architecture")
 
 
 def _cmd_progress(args: argparse.Namespace) -> None:

@@ -4,7 +4,7 @@
 |-------|-------|
 | **ID** | DOC-0009 |
 | **Nome** | Architectural Invariants |
-| **Versão** | 1.0 |
+| **Versão** | 4.0 |
 | **Status** | Approved |
 | **Categoria** | Architecture |
 | **Owner** | Chief Architect |
@@ -88,6 +88,123 @@ depender de uma camada externa a ela.
 A camada de Application conhece apenas interfaces (`Protocol`).
 A implementação concreta (SQLite, PostgreSQL, memória) é injetada.
 Trocar de banco não altera uma linha de Application ou Domain.
+
+### I11 — API Independence (no interface knows the Runtime directly)
+
+Nenhuma interface (REST, SDK, CLI, UI gráfica) pode importar,
+instanciar ou depender diretamente do Runtime (`ascend.runtime`).
+
+Toda comunicação entre interfaces e Runtime passa
+obrigatoriamente pela Application Layer (use cases).
+
+```
+UI/SDK → API → Application Layer → Runtime
+```
+
+Isso garante que:
+- Trocar de Runtime não exige mudar interfaces
+- Trocar de interface não exige mudar o Runtime
+- A Application Layer é o único contrato que importa
+
+### I12 — SDK Independence (no Feature imports HTTP directly)
+
+Nenhuma Feature, Componente ou Hook no frontend pode importar
+diretamente bibliotecas HTTP (`fetch`, `axios`, `ky`, etc.) ou
+instanciar Transportes.
+
+Toda comunicação entre a Experience Layer e a Platform Layer passa
+obrigatoriamente pelos **SDK Clients**.
+
+```
+Feature → SDK Client → Transport → API/Runtime
+```
+
+Isso garante que:
+- Trocar de API não exige mudar a interface
+- Trocar de Transporte (Mock → REST → Offline) não exige mudar Features
+- O SDK é o único contrato que a Experience Layer conhece
+
+### I13 — Canonical Language
+
+Toda camada do ASCEND deve utilizar o mesmo modelo canônico para representar os conceitos do domínio. O pacote `@ascend/contracts` é a fonte única da verdade para todos os tipos de domínio. Traduções entre camadas devem ser excepcionais, documentadas e justificadas por RFC.
+
+### I14 — Cognitive Independence
+
+Nenhum componente cognitivo pode alterar o Runtime.
+
+A Cognitive Layer pode:
+- Observar eventos e estado do Runtime (somente leitura)
+- Analisar padrões através de observações
+- Gerar insights e recomendações estruturados
+- Publicar insights para a Experience Layer
+
+A Cognitive Layer **não pode**:
+- Alterar entidades de domínio
+- Modificar estado do Runtime
+- Alterar competências, XP ou níveis
+- Escrever no banco de dados
+- Bloquear operações do Runtime
+- Sobrescrever decisões do Builder
+
+Toda comunicação entre a Cognitive Layer e o Runtime é governada pelo **SPEC-0005 — Cognitive Protocol**.
+
+### I15 — Observation Determinism
+
+Every observation must produce the same result for the same sequence of events.
+
+The Cognitive Layer may never modify events. It may only observe them.
+
+Events are immutable. Metrics are reproducible. Replay must generate exactly the same results.
+
+### I16 — Observation Append Only
+
+Once an observation is written to the cognitive store, it is never modified, updated, or deleted.
+
+The `observations` table is **append-only**. No `UPDATE` or `DELETE` operations are permitted on observation rows. The only exception is retention pruning, which deletes entire rows (not individual fields) according to a configurable policy — and even then, pruning is logged and auditable.
+
+This invariant guarantees:
+- **Replay determinism:** The same session always produces the same timeline, because the same observations are always read in the same order.
+- **Audit integrity:** Historical observations are tamper-proof. What was observed at the time is preserved forever.
+- **Causal traceability:** Every signal, pattern, and insight can be traced back to its root observation, which will never change.
+
+The only permitted mutations on cognitive data are:
+1. **Append**: New observations are written.
+2. **Prune**: Entire observation rows are deleted (not updated) by retention policy.
+3. **Export & Delete**: The builder can export and then delete all their data (full row deletion, not update).
+
+No `UPDATE` statement may target the `observations`, `signals`, or `events` tables of the cognitive database at any time.
+
+### I17 — Repository Integrity
+
+The repository must never be left in an inconsistent state.
+
+Every logical unit of work must end with:
+- All tests passing
+- Documentation synchronized
+- Commit completed
+- Working tree clean (`git status` → `nothing to commit, working tree clean`)
+
+**Rules:**
+
+1. **No implementation continues while uncommitted code exists.** If `git status` is dirty, fix it first.
+2. **`git status` must return `working tree clean` before starting any new feature.**
+3. **Never accumulate more than 10 files changed OR 500 lines without a commit.** Whichever limit is reached first triggers a mandatory commit.
+4. **Every AI agent must run `git status` before starting and before finishing any task.**
+5. **Under no circumstances may the working tree contain 200+ uncommitted files.** This is a constitutional violation requiring immediate invocation of RECOVERY_PROTOCOL.md.
+6. **Every commit must be small and focused.** One commit = one logical change.
+
+**Failure to comply with I17 triggers mandatory RECOVERY_PROTOCOL.md execution.** Repeated violations may result in loss of commit privileges.
+
+## Change History
+
+| Version | Date | Author | Change |
+|---------|------|--------|--------|
+| 6.0 | 2026-07-21 | Chief Architect | Added I17 — Repository Integrity (OPERAÇÃO HERMES II) |
+| 5.0 | 2026-07-21 | Chief Architect | Added I16 — Observation Append Only (OPERAÇÃO PROMETHEUS) |
+| 4.0 | 2026-07-20 | Chief Architect | Added I15 — Observation Determinism (OPERAÇÃO OLYMPUS) |
+| 3.0 | 2026-07-20 | Chief Architect | Added I14 — Cognitive Independence (OPERAÇÃO ATHENA — The Cognitive Constitution) |
+| 2.0 | 2026-07-20 | Chief Architect | Added I13 — Canonical Language (references `@ascend/contracts`) |
+| 1.0 | 2026-07-20 | Chief Architect | Initial version — OPERAÇÃO APOLLO |
 
 ## Violações
 
