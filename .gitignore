@@ -26,8 +26,7 @@ dist/
 .pytest_cache/
 *.egg-info/
 
-# GitHub
-.github/
+# GitHub (excluir apenas arquivos locais, não workflows/templates)
 
 # Windows
 desktop.ini

@@ -45,6 +45,16 @@ ascend package validate
 
 ---
 
+## Developer Onboarding
+
+Before contributing to ASCEND, every developer (human or AI) **must** read:
+
+👉 [**START HERE — ASCEND Engineering Governance System (AEGS)**](.ascend/START_HERE.md)
+
+The AEGS defines mandatory reading order, development protocols, commit rules, code review standards, and more. Compliance is required for all contributions.
+
+---
+
 ## Specifications
 
 | Spec | Description | Status |

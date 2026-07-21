@@ -71,6 +71,27 @@ Architecture Decision Records document significant decisions:
 
 ---
 
+## ASCEND Engineering Governance System (AEGS)
+
+The **ASCEND Engineering Governance System (AEGS)** is the official governance framework for all development activity.
+
+📍 **Location:** `.ascend/`
+
+| Document | ID | Purpose |
+|----------|----|---------|
+| START_HERE | AEGS-000 | Mandatory onboarding and reading order |
+| DEVELOPMENT_PROTOCOL | AEGS-001 | Development conventions and policies |
+| COMMIT_PROTOCOL | AEGS-002 | Commit message format and rules |
+| AI_DEVELOPMENT_PROTOCOL | AEGS-003 | Rules for AI agents |
+| HUMAN_DEVELOPMENT_PROTOCOL | AEGS-004 | Workflow for human contributors |
+| CODE_REVIEW_PROTOCOL | AEGS-005 | Code review checklist and scoring |
+| RELEASE_PROTOCOL | AEGS-006 | Release lifecycle and process |
+| AI_BOOT_SEQUENCE | AEGS-007 | AI startup sequence |
+
+Every contributor must read AEGS-000 before making any change.
+
+---
+
 ## License
 
 All code and specifications are licensed under MIT unless otherwise noted.

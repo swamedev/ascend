@@ -1,6 +1,12 @@
 # Contributing to ASCEND
 
 Thank you for your interest in contributing to ASCEND.
+
+**Before contributing, you MUST read:**
+👉 [**START HERE — ASCEND Engineering Governance System (AEGS)**](.ascend/START_HERE.md)
+
+The AEGS defines mandatory reading order, development protocols, commit rules, and code review standards. Compliance is required for all contributions. If you have not read every required document, you are NOT authorized to modify ASCEND.
+
 This document provides guidelines for contributors.
 
 ---
@@ -13,6 +19,16 @@ All contributors must adhere to the [Contributor Covenant](https://www.contribut
 ---
 
 ## How to Contribute
+
+### 0. Read the AEGS
+
+Before any contribution:
+1. Read `.ascend/START_HERE.md` — mandatory onboarding
+2. Read the full **ASCEND Engineering Governance System (AEGS)** in `.ascend/`
+3. Follow the commit protocol (AEGS-002) for all commits
+4. Follow the code review protocol (AEGS-005) for all PRs
+
+---
 
 ### 1. Report Issues
 
