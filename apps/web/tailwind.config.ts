@@ -28,6 +28,18 @@ const config: Config = {
           DEFAULT: 'var(--ascend-danger)',
           foreground: '#ffffff',
         },
+        success: {
+          DEFAULT: 'var(--ascend-success)',
+          foreground: '#ffffff',
+        },
+        warning: {
+          DEFAULT: 'var(--ascend-warning)',
+          foreground: '#ffffff',
+        },
+        info: {
+          DEFAULT: 'var(--ascend-info)',
+          foreground: '#ffffff',
+        },
         muted: {
           DEFAULT: 'var(--ascend-muted)',
           foreground: 'var(--ascend-foreground-muted)',

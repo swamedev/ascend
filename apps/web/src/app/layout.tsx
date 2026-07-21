@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { QueryProvider } from '@/providers/query-provider'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 import { LayoutProvider } from '@/components/layout/layout-provider'
 import { AppShell } from '@/components/layout/app-shell'
@@ -25,19 +26,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <LayoutProvider>
-            <AppShell
-              workspace={children}
-            />
-            <ThemeInspector />
-          </LayoutProvider>
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <LayoutProvider>
+              <AppShell
+                workspace={children}
+              />
+              {process.env.NODE_ENV === 'development' && <ThemeInspector />}
+            </LayoutProvider>
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   )
