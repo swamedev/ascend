@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from ascend.domain.evidence import Evidence, EvidenceStatus, EvidenceType
 
 from .connection import ConnectionManager
@@ -23,13 +25,7 @@ class SQLiteEvidenceRepository(SQLiteRepositoryBase):
             ),
         )
 
-    def get(self, evidence_id: str) -> Evidence | None:
-        row = self._fetch_one(
-            "SELECT id, builder_id, mission_id, artifact, type, status, submitted_at FROM evidence WHERE id = ?",
-            (evidence_id,),
-        )
-        if not row:
-            return None
+    def _row_to_evidence(self, row: dict) -> Evidence:
         evidence = Evidence(
             artifact=row["artifact"],
             type=EvidenceType(row["type"]),
@@ -39,13 +35,35 @@ class SQLiteEvidenceRepository(SQLiteRepositoryBase):
             status=EvidenceStatus(row["status"]),
         )
         if row["submitted_at"]:
-            from datetime import datetime
             evidence.submitted_at = datetime.fromisoformat(row["submitted_at"])
         return evidence
 
-    def list_by_builder(self, builder_id: str) -> list[Evidence]:
+    def get(self, evidence_id: str) -> Evidence | None:
+        row = self._fetch_one(
+            "SELECT id, builder_id, mission_id, artifact, type, status, submitted_at FROM evidence WHERE id = ?",
+            (evidence_id,),
+        )
+        if not row:
+            return None
+        return self._row_to_evidence(row)
+
+    def list_by_builder(self, builder_id: str, limit: int = 50, offset: int = 0) -> list[Evidence]:
         rows = self._fetch_all(
-            "SELECT id FROM evidence WHERE builder_id = ?",
+            "SELECT id, builder_id, mission_id, artifact, type, status, submitted_at FROM evidence WHERE builder_id = ? ORDER BY submitted_at DESC LIMIT ? OFFSET ?",
+            (builder_id, limit, offset),
+        )
+        return [self._row_to_evidence(r) for r in rows]
+
+    def list_by_builder_and_mission(self, builder_id: str, mission_id: str) -> list[Evidence]:
+        rows = self._fetch_all(
+            "SELECT id, builder_id, mission_id, artifact, type, status, submitted_at FROM evidence WHERE builder_id = ? AND mission_id = ?",
+            (builder_id, mission_id),
+        )
+        return [self._row_to_evidence(r) for r in rows]
+
+    def count_by_builder(self, builder_id: str) -> int:
+        row = self._fetch_one(
+            "SELECT COUNT(*) as cnt FROM evidence WHERE builder_id = ?",
             (builder_id,),
         )
-        return [self.get(r["id"]) for r in rows if self.get(r["id"])]
+        return row["cnt"] if row else 0

@@ -107,6 +107,13 @@ class SQLiteBuilderRepository(SQLiteRepositoryBase):
             return None
         return self.get(row["id"])
 
-    def list(self) -> list[Builder]:
-        rows = self._fetch_all("SELECT id FROM builders")
+    def list(self, limit: int = 50, offset: int = 0) -> list[Builder]:
+        rows = self._fetch_all(
+            "SELECT id FROM builders ORDER BY id LIMIT ? OFFSET ?",
+            (limit, offset),
+        )
         return [self.get(r["id"]) for r in rows if self.get(r["id"])]
+
+    def count(self) -> int:
+        row = self._fetch_one("SELECT COUNT(*) as cnt FROM builders")
+        return row["cnt"] if row else 0

@@ -50,6 +50,7 @@ class MissionService:
         evidence = Evidence(
             artifact=command.artifact,
             type=command.evidence_type,
+            mission_id=command.mission_id,
         )
         builder.submit_evidence(evidence, mission)
         self._builder_repo.save(builder)
